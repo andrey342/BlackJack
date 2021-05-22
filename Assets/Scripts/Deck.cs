@@ -71,10 +71,15 @@ public class Deck : MonoBehaviour
         while (count > 1) //hasta que el while no llegue al primer int de la lista
         {
             count--; //paso a otro item, 52-1= 51 ...
-            int aleatorio = Random.Range(0, count + 1); //genero un ite, aleatirio
+            int aleatorio = Random.Range(0, count + 1); //genero un iteM, aleatirio
             int aux = values[aleatorio]; //recojo el int del index aleatorio
             values[aleatorio] = values[count]; //guardo en el index aleatorio el valor del item que estamos ahora
             values[count] = aux; //guardo el aux en el item que estamos
+
+            // shuffle faces
+            Sprite auxFace = faces[aleatorio];
+            faces[aleatorio] = faces[count];
+            faces[count] = auxFace;
         }
         
 
@@ -93,6 +98,17 @@ public class Deck : MonoBehaviour
              * Si alguno de los dos obtiene Blackjack, termina el juego y mostramos mensaje
              */
         }
+        int actualPlayerPoints=player.GetComponent<CardHand>().points; //get los points del player
+        if(actualPlayerPoints == 21) //si tiene 21
+        {
+            finalMessage.text = "El player a ganado! BlackJack"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>(); 
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+        
     }
 
     private void CalculateProbabilities()
