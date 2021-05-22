@@ -13,6 +13,7 @@ public class Deck : MonoBehaviour
     public Text probMessage;
 
     public int[] values = new int[52];
+    
     int cardIndex = 0;    
        
     private void Awake()
@@ -40,18 +41,18 @@ public class Deck : MonoBehaviour
         {   
             
             cont++;
-            if(cont <= 9)
+            if(cont <= 9) //CADA 9 cartas
             {
-                values[i] = cont;
+                values[i] = cont; //se pone los valores del 1-10
             }
-            else if(cont > 9 && cont <=13)
+            else if(cont > 9 && cont <=13) //los Q J K se ponen a 10
             {
                 values[i] = 10;
             }
-            else if(cont ==14)
+            else if(cont ==14) //cuando aparece un as
             {
                 cont = 1;
-                values[i] = cont;
+                values[i] = cont; //se pone a 1 y se reinicia el contador
             }
             
             
@@ -65,7 +66,21 @@ public class Deck : MonoBehaviour
          * Barajar las cartas aleatoriamente.
          * El método Random.Range(0,n), devuelve un valor entre 0 y n-1
          * Si lo necesitas, puedes definir nuevos arrays.
-         */       
+         */
+        int count = values.Length; //get count de la lista
+        while (count > 1) //hasta que el while no llegue al primer int de la lista
+        {
+            count--; //paso a otro item, 52-1= 51 ...
+            int aleatorio = Random.Range(0, count + 1); //genero un ite, aleatirio
+            int aux = values[aleatorio]; //recojo el int del index aleatorio
+            values[aleatorio] = values[count]; //guardo en el index aleatorio el valor del item que estamos ahora
+            values[count] = aux; //guardo el aux en el item que estamos
+        }
+        
+
+        
+
+
     }
 
     void StartGame()
