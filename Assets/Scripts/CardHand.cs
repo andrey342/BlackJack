@@ -3,34 +3,34 @@ using UnityEngine;
 
 public class CardHand : MonoBehaviour
 {
-    public List<GameObject> cards = new List<GameObject>();
-    public GameObject card;
-    public bool isDealer = false;
-    public int points;
-    private int coordY;    
+    public List<GameObject> cards = new List<GameObject>(); //lista de cartas que tienes al jugar
+    public GameObject card; //objeto card para instanciar
+    public bool isDealer = false; //si es player o no
+    public int points; //puntos de cada carta
+    private int coordY; //coordenada de insertar carta
      
     private void Awake()
     {
-        points = 0;
+        points = 0; //empieza por 0
         //Definimos dónde posicionamos las cartas de cada uno
-        if (!isDealer)
-            coordY = 3;
-        else
+        if (!isDealer) //si es jugador
+            coordY = 3; //coor de las cartas
+        else //si es player
             coordY = -1;
     }
 
-    public void Clear()
+    public void Clear() 
     {
-        points = 0;
+        points = 0; //se limpia los puntos
         if (!isDealer)
             coordY = 3;
         else
             coordY = -1;
-        foreach (GameObject g in cards)
+        foreach (GameObject g in cards) //destruir las cartas del tablero
         {
             Destroy(g);
         }
-        cards.Clear();                        
+        cards.Clear();     //limpiar lista                    
     }        
 
     public void InitialToggle()
