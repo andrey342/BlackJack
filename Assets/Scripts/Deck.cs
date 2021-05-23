@@ -12,14 +12,25 @@ public class Deck : MonoBehaviour
     public Text finalMessage;
     public Text probMessage;
 
+    //banca
+    public int saldo = 1000;
+    public int apuesta = 0;
+    public Text saldoText;
+    public Text apuestaText;
+    public Button apuestadiez;
+    public Button apuestaCincuenta;
+    public Button apuestaCien;
+    public Button apuestaCincoZeroZero;
+    //fin banca
+
     public int[] values = new int[52];
     
     int cardIndex = 0;    
        
     private void Awake()
     {    
-        InitCardValues();        
-
+        InitCardValues();
+        InitBanca();
     }
 
     private void Start()
@@ -27,6 +38,8 @@ public class Deck : MonoBehaviour
         ShuffleCards();
         StartGame();        
     }
+
+    
 
     private void InitCardValues()
     {
@@ -375,6 +388,35 @@ public class Deck : MonoBehaviour
             dealerToggleFace.ToggleFace(true); //rotarla
         }
     }
-    
+
+
+    //parte opcional banca
+    private void InitBanca()
+    {
+        saldoText.text = saldo.ToString();
+        apuestaText.text = apuesta.ToString();
+    }
+    public void Apuesta(string numApuesta)
+    {
+        int apuestaInt = int.Parse(numApuesta);  //converitr de string a int
+        if (saldo >= apuestaInt)
+        {
+            saldo = saldo - apuestaInt; // restar la apuesta al saldo
+            apuesta += apuestaInt; //sumar el saldo
+            if (saldo == 0)
+            {
+                DesactivarBotonesBanca();
+            }
+            InitBanca();
+        } 
+    }
+
+    private void DesactivarBotonesBanca()
+    {
+        apuestaCien.interactable = false;
+        apuestaCincoZeroZero.interactable = false;
+        apuestaCincuenta.interactable = false;
+        apuestadiez.interactable = false;
+    }
 
 }
