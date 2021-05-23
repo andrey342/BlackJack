@@ -98,18 +98,13 @@ public class Deck : MonoBehaviour
              * Si alguno de los dos obtiene Blackjack, termina el juego y mostramos mensaje
              */
         }
-        int actualPlayerPoints=player.GetComponent<CardHand>().points; //get los points del player
-        if(actualPlayerPoints == 21) //si tiene 21
-        {
-            finalMessage.text = "El player a ganado! BlackJack"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>(); 
-            dealerToggleFace.ToggleFace(true); //rotarla
-        }
-        
+        ComprobarQuienHaGanadoAlPrincipio();
+
+
+
     }
+
+    
 
     private void CalculateProbabilities()
     {
@@ -148,25 +143,17 @@ public class Deck : MonoBehaviour
         
         //Repartimos carta al jugador
         PushPlayer();
-
         /*TODO:
          * Comprobamos si el jugador ya ha perdido y mostramos mensaje
-         */      
+         */
+        comprobarPlayer();
 
     }
 
     public void Stand()
     {
-        /*TODO: 
-         * Si estamos en la mano inicial, debemos voltear la primera carta del dealer.
-         */
-
-        /*TODO:
-         * Repartimos cartas al dealer si tiene 16 puntos o menos
-         * El dealer se planta al obtener 17 puntos o más
-         * Mostramos el mensaje del que ha ganado
-         */                
-         
+        
+        
     }
 
     public void PlayAgain()
@@ -180,5 +167,65 @@ public class Deck : MonoBehaviour
         ShuffleCards();
         StartGame();
     }
+
+    private void ComprobarQuienHaGanadoAlPrincipio()
+    {
+        int actualPlayerPoints = player.GetComponent<CardHand>().points; //get los points del player
+        int actualDealerPoints = dealer.GetComponent<CardHand>().points; //get los points del dealer
+
+        if (actualPlayerPoints == 21 && actualDealerPoints == 21) //empate
+        {
+            finalMessage.text = "Empate! BlackJack!"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+        else
+        if (actualPlayerPoints == 21) //blackjack jugador
+        {
+            finalMessage.text = "El player a ganado! BlackJack"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+        else
+        if (actualDealerPoints == 21) //blackjack dealer
+        {
+            finalMessage.text = "El player ha perdido! BlackJack del dealer!"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+    }
+
+    private void comprobarPlayer()
+    {
+        int actualPlayerPoints = player.GetComponent<CardHand>().points; //get los points del player
+        if (actualPlayerPoints == 21) //blackjack jugador
+        {
+            finalMessage.text = "El player a ganado! BlackJack"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+        else if (actualPlayerPoints > 21)
+        {
+            finalMessage.text = "El player a perdido!"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+    }
     
+
 }
