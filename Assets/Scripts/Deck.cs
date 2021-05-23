@@ -266,50 +266,29 @@ public class Deck : MonoBehaviour
         int actualDealerPoints = dealer.GetComponent<CardHand>().points; //get los points del dealer
         if (actualDealerPoints == 21) //si es blackjack
         {
-            finalMessage.text = "El player ha perdido! BlackJack del dealer"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-            dealerToggleFace.ToggleFace(true); //rotarla
+            PlayerHaPerdido("El player ha perdido! BlackJack del dealer");
         }
         else if(actualDealerPoints >=17) //si tiene mas o igual a 17 puntos
         {
             if(actualDealerPoints > 21) { //si se pasa de 21 puntos
-                finalMessage.text = "El player ha ganado! dealer tiene mas de 21 puntos!"; //texto del ganador
-                hitButton.interactable = false; //desactivo el boton
-                stickButton.interactable = false;//desactivo el boton
-                CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-                dealerToggleFace.ToggleFace(true); //rotarla
+                PlayerHaGanado("El player ha ganado! dealer tiene mas de 21 puntos!");
             }
             else //sino se pasa
             {
                 int actualPlayerPoints = player.GetComponent<CardHand>().points; //get los points del player
                 if (actualDealerPoints.Equals(actualPlayerPoints)) //si hay empate
                 {
-                    finalMessage.text = "Empate con "+actualPlayerPoints+" puntos los dos"; //texto del ganador
-                    hitButton.interactable = false; //desactivo el boton
-                    stickButton.interactable = false;//desactivo el boton
-                    CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-                    dealerToggleFace.ToggleFace(true); //rotarla
+                    Empate("Empate con " + actualPlayerPoints + " puntos los dos");
                 }
                 else //sino hay empate
                 {
                     if(actualPlayerPoints > actualDealerPoints) //si el player tiene mas puntos
                     {
-                        finalMessage.text = "Ha ganado el Player por puntuacion mayor"; //texto del ganador
-                        hitButton.interactable = false; //desactivo el boton
-                        stickButton.interactable = false;//desactivo el boton
-                        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-                        dealerToggleFace.ToggleFace(true); //rotarla
+                        PlayerHaGanado("Ha ganado el Player por puntuacion mayor");
                     }
                     else //sino
                     {
-                        finalMessage.text = "Ha ganado el dealer por puntuacion mayor"; //texto del ganador
-                        hitButton.interactable = false; //desactivo el boton
-                        stickButton.interactable = false;//desactivo el boton
-                        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-                        dealerToggleFace.ToggleFace(true); //rotarla
+                        PlayerHaPerdido("Ha ganado el dealer por puntuacion mayor");
                     }
                 }
 
@@ -337,32 +316,17 @@ public class Deck : MonoBehaviour
 
         if (actualPlayerPoints == 21 && actualDealerPoints == 21) //empate
         {
-            finalMessage.text = "Empate! BlackJack!"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-            dealerToggleFace.ToggleFace(true); //rotarla
+            Empate("Empate! BlackJack!");
         }
         else
         if (actualPlayerPoints == 21) //blackjack jugador
         {
-            finalMessage.text = "El player a ganado! BlackJack"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-            dealerToggleFace.ToggleFace(true); //rotarla
+            PlayerHaGanado("El player a ganado! BlackJack");
         }
         else
         if (actualDealerPoints == 21) //blackjack dealer
         {
-            finalMessage.text = "El player ha perdido! BlackJack del dealer!"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-            dealerToggleFace.ToggleFace(true); //rotarla
+            PlayerHaPerdido("El player ha perdido! BlackJack del dealer!");
         }
     }
 
@@ -371,21 +335,11 @@ public class Deck : MonoBehaviour
         int actualPlayerPoints = player.GetComponent<CardHand>().points; //get los points del player
         if (actualPlayerPoints == 21) //blackjack jugador
         {
-            finalMessage.text = "El player a ganado! BlackJack"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-            dealerToggleFace.ToggleFace(true); //rotarla
+            PlayerHaGanado("El player a ganado! BlackJack");
         }
         else if (actualPlayerPoints > 21)
         {
-            finalMessage.text = "El player a perdido!"; //texto del ganador
-            hitButton.interactable = false; //desactivo el boton
-            stickButton.interactable = false;//desactivo el boton
-            //get la carta girada del dealer
-            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
-            dealerToggleFace.ToggleFace(true); //rotarla
+            PlayerHaPerdido("El player a perdido!");
         }
     }
 
@@ -417,6 +371,46 @@ public class Deck : MonoBehaviour
         apuestaCincoZeroZero.interactable = false;
         apuestaCincuenta.interactable = false;
         apuestadiez.interactable = false;
+    }
+
+    private void PlayerHaPerdido(string texto)
+    {
+        finalMessage.text = texto; //texto del ganador
+        hitButton.interactable = false; //desactivo el boton
+        stickButton.interactable = false;//desactivo el boton
+                                         //get la carta girada del dealer
+        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+        dealerToggleFace.ToggleFace(true); //rotarla
+
+        apuesta = 0;
+        InitBanca();
+    }
+
+    private void PlayerHaGanado(string texto)
+    {
+        finalMessage.text = texto; //texto del ganador
+        hitButton.interactable = false; //desactivo el boton
+        stickButton.interactable = false;//desactivo el boton
+        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+        dealerToggleFace.ToggleFace(true); //rotarla
+
+        int ganadorApuesta = apuesta * 2;
+        saldo += ganadorApuesta;
+        apuesta = 0;
+        InitBanca();
+    }
+
+    private void Empate(string text)
+    {
+        finalMessage.text = text; //texto del ganador
+        hitButton.interactable = false; //desactivo el boton
+        stickButton.interactable = false;//desactivo el boton
+        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+        dealerToggleFace.ToggleFace(true); //rotarla
+
+        saldo += apuesta;
+        apuesta = 0;
+        InitBanca();
     }
 
 }
