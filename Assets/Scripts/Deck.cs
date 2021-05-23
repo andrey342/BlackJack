@@ -108,12 +108,93 @@ public class Deck : MonoBehaviour
 
     private void CalculateProbabilities()
     {
+        int casosProbables = 0;
+        float probabilidad1;
+        int diferencia = 0;
         /*TODO:
          * Calcular las probabilidades de:
-         * - Teniendo la carta oculta, probabilidad de que el dealer tenga más puntuación que el jugador
-         * - Probabilidad de que el jugador obtenga entre un 17 y un 21 si pide una carta
-         * - Probabilidad de que el jugador obtenga más de 21 si pide una carta          
-         */
+         * - Teniendo la carta oculta, probabilidad de que el dealer tenga más puntuación que el jugador*/
+        if (dealer.GetComponent<CardHand>().cards.Count >= 1) //Si tiene el dealer cartas
+        {
+            //puntos del dealer sin la carta tapada
+            int pointsVisibleDealer = dealer.GetComponent<CardHand>().points - dealer.GetComponent<CardHand>()
+                .cards[0].GetComponent<CardModel>().value;
+            casosProbables = 13 - player.GetComponent<CardHand>().points + pointsVisibleDealer;
+            probabilidad1 = casosProbables / 13f;
+            if (probabilidad1 > 1) //si supera el 100%
+            {
+                probabilidad1 = 1;
+            }else if(probabilidad1 < 0) //si es menor que 0%
+            {
+                probabilidad1 = 0;
+            }
+            diferencia = player.GetComponent<CardHand>().points - pointsVisibleDealer;
+            if (diferencia >= 10)
+            {
+                probabilidad1 = 0;
+            }
+
+            probabilidad1 = probabilidad1 * 100;
+            probMessage.text = "Prob 1 : " + probabilidad1.ToString() + " %";
+            
+        }
+        /* - Probabilidad de que el jugador obtenga entre un 17 y un 21 si pide una carta*/
+
+        // prob de llegar a 17
+        int casosProbables2 = 0; //prob de llegar a 17
+        float probabilidad2 = 0.0f;
+        float probabilidad21 = 0.0f;
+        casosProbables2 = 13 - (16 - player.GetComponent<CardHand>().points);
+        probabilidad2 = casosProbables2 / 13f;
+        if (probabilidad2 > 1)
+        {
+            probabilidad2 = 1;
+        }
+        else if (probabilidad2 < 0)
+        {
+            probabilidad2 = 0;
+        }
+        if (player.GetComponent<CardHand>().points < 7)
+        {
+            probabilidad2 = 0;
+        }
+
+        
+
+
+        /* - Probabilidad de que el jugador obtenga más de 21 si pide una carta*/
+        int casosProbables3 = 0;
+        float probabilidad3 = 0.0f;
+        casosProbables3 = 13 - (21 - player.GetComponent<CardHand>().points);
+        probabilidad3 = casosProbables3 / 13f;
+        if (probabilidad3 > 1)
+        {
+            probabilidad3 = 1;
+        }
+        else if (probabilidad3 < 0)
+        {
+            probabilidad3 = 0;
+        }
+        if (player.GetComponent<CardHand>().points < 12)
+        {
+            probabilidad3 = 0;
+        }
+        probabilidad3 = probabilidad3 * 100;
+        probMessage.text +="\nProb 3: " + probabilidad3.ToString() + " %";
+
+
+        //prob entre 17 y 21
+        probabilidad21 = probabilidad2 - probabilidad3;
+        if (probabilidad21 > 1)
+        {
+            probabilidad21 = 1;
+        }
+        else if (probabilidad21 < 0)
+        {
+            probabilidad21 = 0;
+        }
+        probabilidad21 = probabilidad21 * 100;
+        probMessage.text += "\nProb 17-21: " + probabilidad21.ToString() + " %";
     }
 
     void PushDealer()
