@@ -54,7 +54,7 @@ public class Deck : MonoBehaviour
         {   
             
             cont++;
-            if(cont <= 9) //CADA 9 cartas
+            if(cont > 1 && cont <= 9) //CADA 9 cartas
             {
                 values[i] = cont; //se pone los valores del 1-10
             }
@@ -62,10 +62,10 @@ public class Deck : MonoBehaviour
             {
                 values[i] = 10;
             }
-            else if(cont ==14) //cuando aparece un as
+            else if(cont ==14 || cont == 1) //cuando aparece un as
             {
                 cont = 1;
-                values[i] = cont; //se pone a 1 y se reinicia el contador
+                values[i] = 11; //se pone a 11 y se reinicia el contador
             }
             
             
