@@ -152,7 +152,75 @@ public class Deck : MonoBehaviour
 
     public void Stand()
     {
-        
+        /*TODO: 
+         * Si estamos en la mano inicial, debemos voltear la primera carta del dealer.
+         */
+
+        /*TODO:
+         * Repartimos cartas al dealer si tiene 16 puntos o menos
+         * El dealer se planta al obtener 17 puntos o más
+         * Mostramos el mensaje del que ha ganado
+         */
+        hitButton.interactable = false; //descactivo boton
+
+        while(dealer.GetComponent<CardHand>().points <= 16) // si tiene 16 puntos o menos insertar cartas
+        {
+            
+            PushDealer(); //insertar carta
+        }
+
+        int actualDealerPoints = dealer.GetComponent<CardHand>().points; //get los points del dealer
+        if (actualDealerPoints == 21) //si es blackjack
+        {
+            finalMessage.text = "El player ha perdido! BlackJack del dealer"; //texto del ganador
+            hitButton.interactable = false; //desactivo el boton
+            stickButton.interactable = false;//desactivo el boton
+            //get la carta girada del dealer
+            CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+            dealerToggleFace.ToggleFace(true); //rotarla
+        }
+        else if(actualDealerPoints >=17) //si tiene mas o igual a 17 puntos
+        {
+            if(actualDealerPoints > 21) { //si se pasa de 21 puntos
+                finalMessage.text = "El player ha ganado! dealer tiene mas de 21 puntos!"; //texto del ganador
+                hitButton.interactable = false; //desactivo el boton
+                stickButton.interactable = false;//desactivo el boton
+                CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+                dealerToggleFace.ToggleFace(true); //rotarla
+            }
+            else //sino se pasa
+            {
+                int actualPlayerPoints = player.GetComponent<CardHand>().points; //get los points del player
+                if (actualDealerPoints.Equals(actualPlayerPoints)) //si hay empate
+                {
+                    finalMessage.text = "Empate con "+actualPlayerPoints+" puntos los dos"; //texto del ganador
+                    hitButton.interactable = false; //desactivo el boton
+                    stickButton.interactable = false;//desactivo el boton
+                    CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+                    dealerToggleFace.ToggleFace(true); //rotarla
+                }
+                else //sino hay empate
+                {
+                    if(actualPlayerPoints > actualDealerPoints) //si el player tiene mas puntos
+                    {
+                        finalMessage.text = "Ha ganado el Player por puntuacion mayor"; //texto del ganador
+                        hitButton.interactable = false; //desactivo el boton
+                        stickButton.interactable = false;//desactivo el boton
+                        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+                        dealerToggleFace.ToggleFace(true); //rotarla
+                    }
+                    else //sino
+                    {
+                        finalMessage.text = "Ha ganado el dealer por puntuacion mayor"; //texto del ganador
+                        hitButton.interactable = false; //desactivo el boton
+                        stickButton.interactable = false;//desactivo el boton
+                        CardModel dealerToggleFace = dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>();
+                        dealerToggleFace.ToggleFace(true); //rotarla
+                    }
+                }
+
+            }
+        }
         
     }
 
