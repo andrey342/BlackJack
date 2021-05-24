@@ -134,7 +134,8 @@ public class Deck : MonoBehaviour
                 .cards[0].GetComponent<CardModel>().value; //puntos de las cartas visibles, le resto la carta oculta
             //casos en los que probables en los que el dealer tiene mas puntos que tu
             //casos probables de cartas = 13(num de palos) - (puntos + los visibles);
-            casosProbables = 13 - player.GetComponent<CardHand>().points + pointsVisibleDealer; //13 tipos de cartas, 13 - la diferencia de los 2 player,dealer, para saber
+            //(diferencia de cuantos puntos necesita el dealer para superarte)
+            casosProbables = 13 - (player.GetComponent<CardHand>().points - pointsVisibleDealer); //13 tipos de cartas, 13 - la diferencia de los 2 player,dealer, para saber
             probabilidad1 = casosProbables / 13f; //casos probables / los casos posibles
             if (probabilidad1 > 1) //si supera el 100%
             {
