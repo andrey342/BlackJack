@@ -373,6 +373,13 @@ public class Deck : MonoBehaviour
         apuestaCincuenta.interactable = false;
         apuestadiez.interactable = false;
     }
+    private void ActivarBotonesBanca()
+    {
+        apuestaCien.interactable = true;
+        apuestaCincoZeroZero.interactable = true;
+        apuestaCincuenta.interactable = true;
+        apuestadiez.interactable = true;
+    }
 
     private void PlayerHaPerdido(string texto)
     {
@@ -399,6 +406,10 @@ public class Deck : MonoBehaviour
         saldo += ganadorApuesta;
         apuesta = 0;
         InitBanca();
+        if(saldo != 0)
+        {
+            ActivarBotonesBanca();
+        }
     }
 
     private void Empate(string text)
@@ -412,6 +423,10 @@ public class Deck : MonoBehaviour
         saldo += apuesta;
         apuesta = 0;
         InitBanca();
+        if (saldo != 0)
+        {
+            ActivarBotonesBanca();
+        }
     }
 
 }
