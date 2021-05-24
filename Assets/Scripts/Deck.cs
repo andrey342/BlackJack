@@ -133,6 +133,7 @@ public class Deck : MonoBehaviour
             int pointsVisibleDealer = dealer.GetComponent<CardHand>().points - dealer.GetComponent<CardHand>()
                 .cards[0].GetComponent<CardModel>().value; //puntos de las cartas visibles, le resto la carta oculta
             //casos en los que probables en los que el dealer tiene mas puntos que tu
+            //casos probables de cartas = 13(num de palos) - (puntos + los visibles);
             casosProbables = 13 - player.GetComponent<CardHand>().points + pointsVisibleDealer; //13 tipos de cartas, 13 - la diferencia de los 2 player,dealer, para saber
             probabilidad1 = casosProbables / 13f; //casos probables / los casos posibles
             if (probabilidad1 > 1) //si supera el 100%
@@ -158,6 +159,7 @@ public class Deck : MonoBehaviour
         int casosProbables2 = 0; //prob de llegar a 17
         float probabilidad2 = 0.0f;
         float probabilidad21 = 0.0f;
+        //casos probables de cartas que supern 17 = 13(num carta) - (16 - puntosPlayer) (para saber cuantos puntos le faltan para llegar a 17)
         casosProbables2 = 13 - (16 - player.GetComponent<CardHand>().points); //casos de cartas en las que llegas a 17 puntps
         probabilidad2 = casosProbables2 / 13f;
         if (probabilidad2 > 1)
@@ -168,7 +170,7 @@ public class Deck : MonoBehaviour
         {
             probabilidad2 = 0;
         }
-        if (player.GetComponent<CardHand>().points < 7) // un numero menos de 7 no puede llegar a 17 puntos o mas
+        if (player.GetComponent<CardHand>().points < 6) // un numero menos de 6 no puede llegar a 17 puntos o mas
         {
             probabilidad2 = 0;
         }
@@ -179,7 +181,7 @@ public class Deck : MonoBehaviour
         /* - Probabilidad de que el jugador obtenga más de 21 si pide una carta*/
         int casosProbables3 = 0;
         float probabilidad3 = 0.0f;
-        casosProbables3 = 13 - 21 + player.GetComponent<CardHand>().points; //los casos de las cartas en las que puedes pasarte de 21
+        casosProbables3 = 13 - (21 - player.GetComponent<CardHand>().points); //los casos de las cartas en las que puedes pasarte de 21
         probabilidad3 = casosProbables3 / 13f; //casos prob / los que hay
         if (probabilidad3 > 1)
         {
@@ -189,7 +191,7 @@ public class Deck : MonoBehaviour
         {
             probabilidad3 = 0;
         }
-        if (player.GetComponent<CardHand>().points < 12) //como un numero menor de 12 no puede super los 21 , caso imposible
+        if (player.GetComponent<CardHand>().points < 11) //como un numero menor de 11 no puede super los 21 , caso imposible
         {
             probabilidad3 = 0;
         }
